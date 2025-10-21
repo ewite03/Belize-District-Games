@@ -51,36 +51,45 @@
       width: 95%;
     }
 
-    img {
+    .image-wrapper {
+      position: relative;
       width: 100%;
+      height: 300px;
+      overflow: hidden;
       border-radius: 10px;
       margin-top: 10px;
-      opacity: 1;
+    }
+
+    img {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      opacity: 0;
       transition: opacity 0.6s ease;
+    }
+
+    img.active {
+      opacity: 1;
     }
 
     h2 {
       color: #667eea;
       height: 30px;
-      transition: opacity 0.5s ease;
-    }
-
-    .fade-out {
-      opacity: 0;
+      transition: opacity 0.6s ease;
     }
   </style>
 </head>
 <body>
   <div class="container">
     <h1>Learn Belize Districts</h1>
-
     <div id="buttons"></div>
-
     <button class="reset">Reset</button>
-
     <h2 id="name"></h2>
-
-    <img id="img" src="images/belizecountry.png" alt="Belize Map">
+    <div class="image-wrapper">
+      <img id="img1" class="active" src="images/belizecountry.png" alt="Belize Map">
+      <img id="img2" src="" alt="">
+    </div>
   </div>
 
   <script>
@@ -94,10 +103,10 @@
     };
 
     const nameEl = document.getElementById('name');
-    const imgEl = document.getElementById('img');
+    const img1 = document.getElementById('img1');
+    const img2 = document.getElementById('img2');
     const btnsEl = document.getElementById('buttons');
 
-    
     Object.keys(districts).forEach(d => {
       const btn = document.createElement('button');
       btn.textContent = d;
@@ -106,30 +115,31 @@
     });
 
     function changeDistrict(district) {
-      
-      imgEl.classList.add('fade-out');
-      nameEl.classList.add('fade-out');
-
+      nameEl.style.opacity = 0;
+      const activeImg = img1.classList.contains('active') ? img1 : img2;
+      const nextImg = activeImg === img1 ? img2 : img1;
+      nextImg.src = districts[district];
+      nextImg.alt = `Map of ${district} District`;
+      nextImg.classList.add('active');
+      activeImg.classList.remove('active');
       setTimeout(() => {
         nameEl.textContent = district;
-        imgEl.src = districts[district];
-        imgEl.alt = `Map of ${district} District`;
-        imgEl.classList.remove('fade-out');
-        nameEl.classList.remove('fade-out');
-      }, 400); // Wait before switching to make the fade smoother
+        nameEl.style.opacity = 1;
+      }, 300);
     }
 
     document.querySelector('.reset').onclick = () => {
-      imgEl.classList.add('fade-out');
-      nameEl.classList.add('fade-out');
-
+      nameEl.style.opacity = 0;
+      const activeImg = img1.classList.contains('active') ? img1 : img2;
+      const nextImg = activeImg === img1 ? img2 : img1;
+      nextImg.src = "images/belizecountry.png";
+      nextImg.alt = "Map of Belize";
+      nextImg.classList.add('active');
+      activeImg.classList.remove('active');
       setTimeout(() => {
         nameEl.textContent = "";
-        imgEl.src = "images/belizecountry.jpg";
-        imgEl.alt = "Map of Belize";
-        imgEl.classList.remove('fade-out');
-        nameEl.classList.remove('fade-out');
-      }, 400);
+        nameEl.style.opacity = 1;
+      }, 300);
     };
   </script>
 </body>
