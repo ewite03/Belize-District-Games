@@ -2,47 +2,77 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.5">
   <title>Learning Belize Districts</title>
   <style>
     body {
       font-family: Arial;
-      background: #f0f0f0;
-      margin: 20px;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
     }
 
     .container {
       background: white;
-      padding: 20px;
-      max-width: 400px;
-      margin: 0 auto;
+      padding: 30px;
+      border-radius: 15px;
       text-align: center;
+      max-width: 500px;
+      width: 100%;
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+      transition: transform 0.3s ease;
+    }
+
+    .container:hover {
+      transform: scale(1.01);
     }
 
     button {
-      padding: 8px 16px;
-      margin: 5px;
+      padding: 12px;
+      border: none;
+      border-radius: 8px;
       cursor: pointer;
+      color: white;
+      background: #667eea;
+      margin: 5px;
+      width: 45%;
+      transition: all 0.3s ease;
+    }
+
+    button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
     }
 
     .reset {
-      background: #e74c3c;
-      color: white;
-      border: none;
+      background: #f5576c;
+      width: 95%;
     }
 
     img {
-      width: 60%;
-      margin-top: 15px;
-      display: block;
-      margin-left: auto;
-      margin-right: auto;
+      width: 100%;
+      border-radius: 10px;
+      margin-top: 10px;
+      opacity: 1;
+      transition: opacity 0.6s ease;
+    }
+
+    h2 {
+      color: #667eea;
+      height: 30px;
+      transition: opacity 0.5s ease;
+    }
+
+    .fade-out {
+      opacity: 0;
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <h1>Learning Belize Districts</h1>
+    <h1>Learn Belize Districts</h1>
 
     <div id="buttons"></div>
 
@@ -50,36 +80,56 @@
 
     <h2 id="name"></h2>
 
-    <img id="img" src="belizecountry.jpeg" alt="Belize Map">
+    <img id="img" src="images/belizecountry.jpg" alt="Belize Map">
   </div>
 
   <script>
     const districts = {
-      "Corozal": "corozaldistrict.png",
-      "Orange Walk": "orangewalkdistrict.png",
-      "Belize": "belizedistrict.png",
-      "Cayo": "cayodistrict.png",
-      "Stann Creek": "stanncreekdistrict.png",
-      "Toledo": "toledodistrict.png"
+      "Corozal": "images/corozaldistrict.png",
+      "Orange Walk": "images/orangewalkdistrict.png",
+      "Belize": "images/belizedistrict.png",
+      "Cayo": "images/cayodistrict.png",
+      "Stann Creek": "images/stanncreekdistrict.png",
+      "Toledo": "images/toledodistrict.png"
     };
 
     const nameEl = document.getElementById('name');
     const imgEl = document.getElementById('img');
     const btnsEl = document.getElementById('buttons');
 
+    
     Object.keys(districts).forEach(d => {
-      let btn = document.createElement('button');
+      const btn = document.createElement('button');
       btn.textContent = d;
-      btn.onclick = () => {
-        nameEl.textContent = d;
-        imgEl.src = districts[d];
-      };
+      btn.onclick = () => changeDistrict(d);
       btnsEl.appendChild(btn);
     });
 
+    function changeDistrict(district) {
+      
+      imgEl.classList.add('fade-out');
+      nameEl.classList.add('fade-out');
+
+      setTimeout(() => {
+        nameEl.textContent = district;
+        imgEl.src = districts[district];
+        imgEl.alt = `Map of ${district} District`;
+        imgEl.classList.remove('fade-out');
+        nameEl.classList.remove('fade-out');
+      }, 400); // Wait before switching to make the fade smoother
+    }
+
     document.querySelector('.reset').onclick = () => {
-      nameEl.textContent = "";
-      imgEl.src = "belizecountry.jpeg";
+      imgEl.classList.add('fade-out');
+      nameEl.classList.add('fade-out');
+
+      setTimeout(() => {
+        nameEl.textContent = "";
+        imgEl.src = "images/belizecountry.jpg";
+        imgEl.alt = "Map of Belize";
+        imgEl.classList.remove('fade-out');
+        nameEl.classList.remove('fade-out');
+      }, 400);
     };
   </script>
 </body>
