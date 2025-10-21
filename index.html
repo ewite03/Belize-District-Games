@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.5">
+  <title>Learning Belize Districts</title>
+  <style>
+    body {
+      font-family: Arial;
+      background: #f0f0f0;
+      margin: 20px;
+    }
+
+    .container {
+      background: white;
+      padding: 20px;
+      max-width: 400px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    button {
+      padding: 8px 16px;
+      margin: 5px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    button:hover {
+      background: #3498db;
+      color: white;
+    }
+
+    .reset {
+      background: #e74c3c;
+      color: white;
+      border: none;
+    }
+
+    .image-wrapper {
+      position: relative;
+      width: 60%;
+      margin: 15px auto 0 auto;
+      height: auto;
+    }
+
+    .image-wrapper img {
+      position: absolute;
+      width: 100%;
+      left: 0;
+      top: 0;
+      transition: opacity 0.5s ease-in-out;
+      opacity: 0;
+    }
+
+    .image-wrapper img.active {
+      opacity: 1;
+      z-index: 1;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Learning Belize Districts</h1>
+    <div id="buttons"></div>
+    <button class="reset">Reset</button>
+    <h2 id="name"></h2>
+    <div class="image-wrapper">
+      <img src="belizecountry.png" alt="Belize Map" class="active" id="current">
+    </div>
+  </div>
+
+  <script>
+    const districts = {
+      "Corozal": "corozal.png",
+      "Orange Walk": "orangewalk.png",
+      "Belize": "belize.png",
+      "Cayo": "cayo.jpg",
+      "Stann Creek": "stanncreek.png",
+      "Toledo": "toledo.png"
+    };
+
+    const nameEl = document.getElementById('name');
+    const btnsEl = document.getElementById('buttons');
+    const wrapper = document.querySelector('.image-wrapper');
+    let currentImg = document.getElementById('current');
+
+    function changeImage(name, src) {
+      const newImg = document.createElement('img');
+      newImg.src = src;
+      newImg.classList.add('active');
+      wrapper.appendChild(newImg);
+      nameEl.textContent = name;
+      setTimeout(() => {
+        currentImg.classList.remove('active');
+        currentImg.remove();
+        currentImg = newImg;
+      }, 20);
+    }
+
+    Object.keys(districts).forEach(d => {
+      let btn = document.createElement('button');
+      btn.textContent = d;
+      btn.onclick = () => changeImage(d, districts[d]);
+      btnsEl.appendChild(btn);
+    });
+
+    document.querySelector('.reset').onclick = () => changeImage("", "belizecountry.png");
+  </script>
+</body>
+</html>
