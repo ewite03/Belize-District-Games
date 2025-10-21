@@ -87,19 +87,19 @@
     <button class="reset">Reset</button>
     <h2 id="name"></h2>
     <div class="image-wrapper">
-      <img id="img1" class="show" src="images/belizecountry.png" alt="Belize Map">
-      <img id="img2" src="images/belizecountry.png" alt="Belize Map">
+      <img id="img1" class="show" src="belizecountry.png" alt="Belize Map">
+      <img id="img2" src="belizecountry.png" alt="Belize Map">
     </div>
   </div>
 
   <script>
     const districts = {
-      "Corozal": "images/corozal.png",
-      "Orange Walk": "images/orangewalk.png",
-      "Belize": "images/belize.png",
-      "Cayo": "images/cayo.png",
-      "Stann Creek": "images/stanncreek.png",
-      "Toledo": "images/toledo.png"
+      "Corozal": "corozal.png",
+      "Orange Walk": "orangewalk.png",
+      "Belize": "belize.png",
+      "Cayo": "cayo.png",
+      "Stann Creek": "stanncreek.png",
+      "Toledo": "toledo.png"
     };
 
     const nameEl = document.getElementById('name');
@@ -136,7 +136,7 @@
       const activeImg = img1.classList.contains('show') ? img1 : img2;
       const nextImg = activeImg === img1 ? img2 : img1;
 
-      nextImg.src = "images/belizecountry.png";
+      nextImg.src = "belizecountry.png";
       nextImg.alt = "Map of Belize";
 
       nextImg.onload = () => {
